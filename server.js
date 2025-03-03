@@ -3,7 +3,7 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -32,7 +32,7 @@ function pickRandomEmojis(num = 7) {
   return result;
 }
 
-// 1) Verify Username => Return userId + random emoji combo
+// Endpoint 1: Verify Username => Return userId + random emoji combo
 app.post('/verify-username', async (req, res) => {
   const { username } = req.body;
   if (!username) return res.status(400).json({ error: 'Username is required' });
@@ -61,7 +61,7 @@ app.post('/verify-username', async (req, res) => {
   }
 });
 
-// 2) Check Bio for emojis
+// Endpoint 2: Check Bio for emojis
 // Expects body: { expectedEmojis: ["emoji1", "emoji2", ...] }
 app.post('/check-bio/:userId', async (req, res) => {
   const { userId } = req.params;
@@ -88,7 +88,7 @@ app.post('/check-bio/:userId', async (req, res) => {
   }
 });
 
-// 3) Check Group Rank
+// Endpoint 3: Check Group Rank
 app.get('/check-rank/:userId', async (req, res) => {
   const { userId } = req.params;
 
